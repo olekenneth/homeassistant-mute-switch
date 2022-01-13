@@ -31,18 +31,15 @@ jobs:
 
       # Runs a single command using the runners shell
       - name: Build
-        run: npm run build
-        
-      - name: Copy package.json to build 
-        run: cp package.json build/
+        run: npm run zip
 
-      - name: Semantic Release
-        uses: cycjimmy/semantic-release-action@v2
+      - name: Upload binaries to release
+        uses: svenstaro/upload-release-action@v2
         with:
-          working_directory: ./build
-          branches: |
-            [
-              'main', 
-            ]
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: Home_Assistant_Mute_Switch-*.zip
+          asset_name: mything
+          tag: ${{ github.ref }}
+          overwrite: true
+          file_glob: true
+          body: "Automatic release"
