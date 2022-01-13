@@ -1,0 +1,27 @@
+{
+  "manifest_version": 3,
+  "name": "Home Assistant Mute Switch",
+  "version": 1,
+  "options_page": "html/options.html",
+  "host_permissions": ["https://meet.google.com/*"],
+  "permissions": ["storage"],
+  "icons": {
+    "16": "/assets/icons/icon16.png",
+    "48": "/assets/icons/icon48.png",
+    "128": "/assets/icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["html/options.html"],
+      "matches": ["https://meet.google.com/*"],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js": ["content_script.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
