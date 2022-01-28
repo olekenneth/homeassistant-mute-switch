@@ -30,14 +30,18 @@ const queryMuteButton = () =>
 const notifyMuteStateChange = async () => {
   if (muteButton) {
     const client = await hassConnection();
-    await client?.callService(
-      "homeassistant",
-      "turn_" +
-        (muteButton.dataset.isMuted === "false" && inverse ? "on" : "off"),
-      {
-        entity_id: ha_sensor,
-      }
-    );
+    try {
+      await client?.callService(
+        "homeassistant",
+        "turn_" +
+          (muteButton.dataset.isMuted === "false" && inverse ? "on" : "off"),
+        {
+          entity_id: ha_sensor,
+        }
+      );
+    } catch (error) {
+      client = undefined;
+    }
   }
 };
 
